@@ -38,15 +38,15 @@ int main(int argc,char *argv[])
     int size = 0;
     char str[MAX];
 
-	/* C code for checking, reading/structuring of matrix file */
+    /* C code for checking, reading/structuring of matrix file */
 	
     FILE *file;
 
-	//if greater than 1 there is value in argv, so we take v
+    //if greater than 1 there is value in argv, so we take v
     if (argc > 1) omp_set_num_threads(atoi(argv[1]));
 
-	//have to plan for what happens if there are issues with the file
-	//or if there is nothing to read in the file
+    //have to plan for what happens if there are issues with the file
+    //or if there is nothing to read in the file
     if (argc == 3)
     {
         if ((file = fopen(argv[2], "r")) == NULL)
@@ -61,7 +61,7 @@ int main(int argc,char *argv[])
     {
        if ((file = fopen("mat.big3", "r")) == NULL)
        {
-       		//Program exits if file errors and  returns 0.
+       	  //Program exits if file errors and  returns 0.
            printf("Problem opening file"); 
            return 0;
        }
@@ -73,10 +73,10 @@ int main(int argc,char *argv[])
     {
         fileLine++;
      
-    //each time compiler reads this line of the matrix, then
+        //each time compiler reads this line of the matrix, then
 	if (fileLine == 2)//
         {
-        	//take size whatever is in the matrix file
+            //take size whatever is in the matrix file
             size = atoi(str);
             
             //and allocates initial array of size of matrix file
@@ -89,8 +89,8 @@ int main(int argc,char *argv[])
         //each time compiler reads this line of the matrix, then
         if (fileLine == 4)
         {
-        	//gets nonzero and if greater than 1, then allocating in another
-        	//array of integer of size non-zero, and also allocate an array of doubles
+            //gets nonzero and if greater than 1, then allocating in another
+            //array of integer of size non-zero, and also allocate an array of doubles
             nonZero = atoi(str);
             if (nonZero > 0)
             {
@@ -99,7 +99,7 @@ int main(int argc,char *argv[])
             }
         }
  
- 		//start at line 5 in matrix file and loads into initial array (ia)
+ 	//start at line 5 in matrix file and loads into initial array (ia)
         if (fileLine > 5 && fileLine <= (size + 6))
         {
             ia[ia_index] = atoi(str);
@@ -137,7 +137,7 @@ int main(int argc,char *argv[])
     double norm  = 0;
     int cnt = 1;
 
-	//timing vars
+    //timing vars
     double start, end;         
     //total time spent on multiply
     double multiply_time = 0; 
@@ -146,11 +146,10 @@ int main(int argc,char *argv[])
     //Total time spend on getting eigenvalue
     double norm_time = 0;
 
-	//timing tests for methods
+    //timing tests for methods
     while (1)
     {
-    
-    	//timing for multiply method
+        //timing for multiply method
        double start = omp_get_wtime();
        multiply(size, x, ans);
        double end = omp_get_wtime();
@@ -194,7 +193,7 @@ int main(int argc,char *argv[])
 //2 arg method to calculate norm
 double retNormalization(int size, double* ans)
 {
- 	//need to declare this outside the pragmas to avoid race conditions
+    //need to declare this outside the pragmas to avoid race conditions
     double sum = 0.0;
     int i;
     double lSum = 0.0; //if needed
@@ -216,7 +215,6 @@ double retNormalization(int size, double* ans)
     {
         sum += ans[i] * ans[i];
         //lSum += ans[i] * ans[i];
-
     }
     //sum = sum + lSum;
 }
